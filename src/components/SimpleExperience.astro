@@ -4,10 +4,10 @@ import {simple_experience} from "../data/simple_experience.js";
 import ExperienceCard from "./ui/ExperienceCard.astro";
 ---
 
-<section class="border-l border-gray-600 w-1/2">
-    <h2 class="font-semibold text-2xl pl-8">Experiencias Recientes</h2>
+<section class="border-l border-gray-600 pl-8 w-1/2">
+    <h2 class="font-semibold text-2xl">Experiencias Recientes</h2>
 
-    <div class="flex flex-col gap-4 py-4 pl-8">
+    <div class="flex flex-col gap-4 py-4">
         {simple_experience.reverse().map(exp => (
             <ExperienceCard {...exp} />
         ))}
