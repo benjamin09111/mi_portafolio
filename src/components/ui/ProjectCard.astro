@@ -1,0 +1,46 @@
+---
+import { Github, Youtube, Eye } from 'lucide-astro';
+
+// Props que recibe el componente
+const { title, subtitle, description, image, repo, youtube, link, tags } = Astro.props;
+---
+
+<div class="w-full max-w-[350px] rounded-lg overflow-hidden shadow-lg lg:shadow-2xl bg-white">
+  <img src={`/${image}`} alt={title} class="w-full h-[180px] object-cover" />
+
+  <div class="p-4">
+    <h3 class="text-xl lg:text-2xl font-semibold">{title}</h3>
+    <p class="text-sm text-gray-600">{subtitle}</p>
+    <p class="text-xs text-gray-500 mt-1">{description}</p>
+
+    <div class="mt-3">
+      <p class="font-semibold text-sm">Tecnologías</p>
+      <div class="flex flex-wrap gap-2 mt-1">
+        {tags.map((tag: string) => (
+            <img src={`/icons/${tag}.svg`} alt={tag} class="w-8 h-8 mr-1" />
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-3">
+      <p class="font-semibold text-sm">Links</p>
+      <div class="flex gap-3 mt-2">
+        {repo && (
+          <a href={repo} target="_blank" class="text-blue-600 hover:underline">
+            <Github />
+          </a>
+        )}
+        {youtube && (
+          <a href={youtube} target="_blank" class="text-blue-600 hover:underline">
+            <Youtube />
+          </a>
+        )}
+        {link && (
+          <a href={link} target="_blank" class="text-blue-600 hover:underline">
+            <Eye />
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</div>

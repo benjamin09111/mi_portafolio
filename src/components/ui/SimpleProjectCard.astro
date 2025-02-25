@@ -1,0 +1,26 @@
+---
+// Props que recibe el componente
+const { title, subtitle, description, image, repo, youtube, link, tags, paid, category } = Astro.props;
+---
+
+<div class="w-full max-w-[350px] rounded-lg overflow-hidden shadow-md bg-white transition-transform duration-200 hover:-translate-y-1 flex">
+  <img src={image || "/placeholder.png"} alt={title} class="w-full h-[60px] object-cover" />
+
+  <div class="p-4">
+    <h3 class="text-lg font-semibold">{title}</h3>
+    <p class="text-sm text-gray-600">{subtitle}</p>
+    <p class="text-xs text-gray-500 mt-1">{description}</p>
+
+    <div class="mt-2 flex flex-wrap gap-2">
+      {tags.map((tag: string) => (
+        <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded">{tag}</span>
+      ))}
+    </div>
+
+    <div class="mt-3 flex gap-3">
+      {repo && <a href={repo} target="_blank" class="text-blue-600 text-sm hover:underline">Repo</a>}
+      {youtube && <a href={youtube} target="_blank" class="text-blue-600 text-sm hover:underline">YouTube</a>}
+      {link && <a href={link} target="_blank" class="text-blue-600 text-sm hover:underline">Ver más</a>}
+    </div>
+  </div>
+</div>

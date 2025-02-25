@@ -1,0 +1,40 @@
+---
+import Navbar from './Navbar.astro';
+import Header from './Header.astro';
+import Projects from './Projects.astro';
+import Experience from './Experience.astro';
+import Skills from './Skills.astro';
+import About from './About.astro';
+import "../styles/global.css";
+---
+
+<div id="container" class="text-gray-800">
+	<Navbar />
+	<main class="relative px-2 md:px-12 lg:px-32 xl:px-64 flex flex-col gap-4 lg:gap-12">
+		<Header />
+		<Projects />
+		<Experience />
+		<Skills />
+		<About />
+	</main>
+</div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+  const elements = document.querySelectorAll(".fade-in");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  elements.forEach((el) => observer.observe(el));
+});
+
+</script>

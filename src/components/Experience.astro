@@ -1,0 +1,14 @@
+---
+import {experience} from "../data/experience.js";
+
+import ExperienceCard from "./ui/ExperienceCard.astro";
+---
+
+<section id="experience" class="fade-in">
+    <h3 class="text-2xl xl:text-3xl  font-semibold my-6">Experiencia</h3>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 py-4">
+        {experience.map(exp => (
+            <ExperienceCard {...exp} />
+        ))}
+    </div>
+</section>
