@@ -1,8 +1,19 @@
 ---
 import { Github, Youtube, Eye } from 'lucide-astro';
 
-// Props que recibe el componente
-const { title, subtitle, description, image, repo, youtube, link, tags } = Astro.props;
+const { title, subtitle, description, image, repo, youtube, link, tags, lang } = Astro.props;
+
+// Definimos un tipo que solo permite estos strings
+type LangType = 'es' | 'en' | 'de';
+
+// Forzamos que lang sea ese tipo
+const language = lang as LangType;
+
+const labels: Record<LangType, { tech: string; links: string }> = {
+  es: { tech: "Tecnologías", links: "Links" },
+  en: { tech: "Technologies", links: "Links" },
+  de: { tech: "Technologien", links: "Links" }
+};
 ---
 
 <div class="w-full max-w-[350px] rounded-lg overflow-hidden shadow-lg lg:shadow-2xl bg-white">
@@ -14,16 +25,16 @@ const { title, subtitle, description, image, repo, youtube, link, tags } = Astro
     <p class="text-xs text-gray-500 mt-1">{description}</p>
 
     <div class="mt-3">
-      <p class="font-semibold text-sm">Tecnologías</p>
+      <p class="font-semibold text-sm">{labels[language].tech}</p>
       <div class="flex flex-wrap gap-2 mt-1">
         {tags.map((tag: string) => (
-            <img src={`/icons/${tag}.svg`} alt={tag} class="w-8 h-8 mr-1" />
+          <img src={`/icons/${tag}.svg`} alt={tag} class="w-8 h-8 mr-1" />
         ))}
       </div>
     </div>
 
     <div class="mt-3">
-      <p class="font-semibold text-sm">Links</p>
+      <p class="font-semibold text-sm">{labels[language].links}</p>
       <div class="flex gap-3 mt-2">
         {repo && (
           <a href={repo} target="_blank" class="text-blue-600 hover:underline">

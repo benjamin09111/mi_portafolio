@@ -1,11 +1,20 @@
 ---
-// Importamos el componente de la línea de tiempo y los datos
 import Timeline from './ui/TimeLine.astro';
 import { timelineItems } from '../data/learning.js';
+
+const pathname = Astro.url.pathname;
+const lang = pathname.startsWith('/en') ? 'en' : pathname.startsWith('/de') ? 'de' : 'es';
+
+const titles = {
+  es: "Mi Línea de Tiempo de Aprendizajes",
+  en: "My Learning Timeline",
+  de: "Meine Lern-Zeitleiste"
+};
 ---
+
 <section id="skills" class="fade-in py-6 background">
-    <h2 class="pl-4 text-2xl xl:text-3xl font-bold mb-6"1>Mi Línea de Tiempo de Aprendizajes</h2>
-    <div class="flex items-center justify-center py-8">
-        <Timeline timelineItems={timelineItems} />
-    </div>
+  <h2 class="pl-4 text-2xl xl:text-3xl font-bold mb-6">{titles[lang]}</h2>
+  <div class="flex items-center justify-center py-8">
+    <Timeline timelineItems={timelineItems} lang={lang} />
+  </div>
 </section>

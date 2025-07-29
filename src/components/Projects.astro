@@ -1,14 +1,25 @@
 ---
-import {projects} from "../data/projects";
-
+import { projects } from "../data/projects";
 import ProjectCard from "./ui/ProjectCard.astro";
----
-<section id="projects">
-    <h3 class="text-2xl xl:text-3xl font-semibold mb-6">Proyectos</h3>
 
-    <div class="grid gap-3 grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 lg:gap-12">
-        {projects.reverse().map(project => (
-            <ProjectCard {...project} />
-        ))}
-    </div>
+const pathname = Astro.url.pathname;
+const lang = pathname.startsWith("/en") ? "en" : pathname.startsWith("/de") ? "de" : "es";
+---
+
+<section id="projects">
+  <h3 class="text-2xl xl:text-3xl font-semibold mb-6">
+    {lang === "es" ? "Proyectos" : lang === "en" ? "Projects" : "Projekte"}
+  </h3>
+
+  <div class="grid gap-3 grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 lg:gap-12">
+    {projects.reverse().map(project => (
+      <ProjectCard
+        {...project}
+        lang={lang}
+        title={project.title[lang]}
+        subtitle={project.subtitle[lang]}
+        description={project.description[lang]}
+      />
+    ))}
+  </div>
 </section>

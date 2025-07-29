@@ -1,17 +1,41 @@
 ---
-const { title, type, duration, company, company_url, image, web, skills, description } = Astro.props;
+const { title, type, duration, company, company_url, image, web, skills, description, lang } = Astro.props;
+
+const supportedLangs = ['es', 'en', 'de'] as const;
+type Lang = typeof supportedLangs[number];
+
+const currentLang: Lang = supportedLangs.includes(lang) ? lang : 'es';
+
+const labels: Record<Lang, { visit: string; skills: string }> = {
+  es: {
+    visit: "Visitar sitio",
+    skills: "Habilidades"
+  },
+  en: {
+    visit: "Visit site",
+    skills: "Skills"
+  },
+  de: {
+    visit: "Webseite besuchen",
+    skills: "Fähigkeiten"
+  }
+};
 ---
 
 <article class="flex flex-col lg:flex-row lg:items-start gap-4 p-2 md:p-5 border rounded lg:rounded-lg md:shadow-md">
-    <img src={image} alt={company} class="w-12 h-12 rounded-md object-cover" />
-    <div>
-        <h3 class="text-lg font-semibold">{title}</h3>
-        <a href={company_url} class="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
-        {company}
-        </a>
-        <p class="text-sm text-gray-600">{type} | {duration}</p>
-        <a href={web} class="text-sm text-gray-600">Visitar sitio</a>
-        <p class="text-sm text-gray-800 mt-2">{description}</p>
-        <p class="text-sm text-gray-500 mt-1">Habilidades: {skills}</p>
-    </div>
+  <img src={image} alt={company[currentLang]} class="w-12 h-12 rounded-md object-cover" />
+  <div>
+    <h3 class="text-lg font-semibold">{title[currentLang]}</h3>
+    <a href={company_url} class="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+      {company[currentLang]}
+    </a>
+    <p class="text-sm text-gray-600">{type[currentLang]} | {duration[currentLang]}</p>
+    {web !== "Sin página de trabajo" && (
+      <a href={web} class="text-sm text-blue-500 hover:underline block mt-1" target="_blank" rel="noopener noreferrer">
+        {labels[currentLang].visit}
+      </a>
+    )}
+    <p class="text-sm text-gray-800 mt-2">{description[currentLang]}</p>
+    <p class="text-sm text-gray-500 mt-1">{labels[currentLang].skills}: {skills[currentLang]}</p>
+  </div>
 </article>

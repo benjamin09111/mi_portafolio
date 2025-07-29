@@ -1,5 +1,20 @@
 ---
 import { Mail, Instagram, Youtube, Linkedin, Github, Menu, X } from 'lucide-astro';
+
+const pathname = Astro.url.pathname;
+const lang = pathname.startsWith('/en') ? 'en' : pathname.startsWith('/de') ? 'de' : 'es';
+
+const navTexts = {
+  es: { proyectos: 'Proyectos', experiencia: 'Experiencia', habilidades: 'Habilidades', sobre: 'Sobre', descargarCV: 'Descargar CV', downloadFile: 'Mi_CV.pdf' },
+  en: { proyectos: 'Projects', experiencia: 'Experience', habilidades: 'Skills', sobre: 'About', descargarCV: 'Download CV', downloadFile: 'My_CV.pdf' },
+  de: { proyectos: 'Projekte', experiencia: 'Erfahrung', habilidades: 'Fähigkeiten', sobre: 'Über', descargarCV: 'Lebenslauf herunterladen', downloadFile: 'Mein_CV.pdf' }
+}[lang];
+
+const langOptions = [
+  { code: 'es', label: 'Español', flag: '🇪🇸', path: '/' },
+  { code: 'en', label: 'English', flag: '🇬🇧', path: '/en' },
+  { code: 'de', label: 'Deutsch', flag: '🇩🇪', path: '/de' }
+];
 ---
 
 <nav class="py-6 px-4 lg:py-12 xl:px-24 2xl:px-64 flex justify-between items-center text-base">
@@ -8,11 +23,30 @@ import { Mail, Instagram, Youtube, Linkedin, Github, Menu, X } from 'lucide-astr
     <a href="#home">BENJAMÍN MORALES</a>
   </div>
 
+  <div class="relative">
+  <button id="lang-toggle" class="flex items-center gap-1 px-2 py-1 border rounded hover:bg-gray-100">
+    🌐 {lang.toUpperCase()}
+    <svg class="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.293l3.71-4.06a.75.75 0 111.1 1.02l-4.25 4.65a.75.75 0 01-1.1 0l-4.25-4.65a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+    </svg>
+  </button>
+  <div id="lang-menu" class="absolute right-0 mt-1 w-40 bg-white border rounded shadow-lg hidden z-50">
+    {langOptions.map(({ code, label, flag, path }) => (
+      <a
+        href={path}
+        class={`block px-4 py-2 text-sm hover:bg-gray-100 ${code === lang ? 'font-bold' : ''}`}
+      >
+        {flag} {label}
+      </a>
+    ))}
+  </div>
+</div>
+
   <div class="hidden lg:flex items-center gap-4">
-    <a href="#projects" class="hover:underline">Proyectos</a>
-    <a href="#experience" class="hover:underline">Experiencia</a>
-    <a href="#skills" class="hover:underline">Habilidades</a>
-    <a href="#about" class="hover:underline">Sobre</a>
+    <a href="#projects" class="hover:underline">{navTexts.proyectos}</a>
+    <a href="#experience" class="hover:underline">{navTexts.experiencia}</a>
+    <a href="#skills" class="hover:underline">{navTexts.habilidades}</a>
+    <a href="#about" class="hover:underline">{navTexts.sobre}</a>
   </div>
 
   <div class="hidden lg:flex items-center gap-3">
@@ -31,7 +65,7 @@ import { Mail, Instagram, Youtube, Linkedin, Github, Menu, X } from 'lucide-astr
     <a href="https://www.instagram.com/benjamin.bmin/" target="_blank" class="text-gray-700 hover:text-black transition">
       <Instagram size={28} />
     </a>
-    <a href="/files/CV.pdf" download="Mi_CV.pdf" class="px-2 py-1 rounded hover:cursor-pointer bg-black text-white hover:bg-black/80">Descargar CV</a>
+    <a href="/files/CV.pdf" download={navTexts.downloadFile} class="px-2 py-1 rounded hover:cursor-pointer bg-black text-white hover:bg-black/80">{navTexts.descargarCV}</a>
   </div>
 
   <!-- Botón menú hamburguesa (solo en móviles) -->
@@ -46,10 +80,10 @@ import { Mail, Instagram, Youtube, Linkedin, Github, Menu, X } from 'lucide-astr
     <X size={28} />
   </button>
 
-  <a href="#projects" class="text-xl py-2 hover:underline">Proyectos</a>
-  <a href="#experience" class="text-xl py-2 hover:underline">Experiencia</a>
-  <a href="#skills" class="text-xl py-2 hover:underline">Habilidades</a>
-  <a href="#about" class="text-xl py-2 hover:underline">Sobre</a>
+  <a href="#projects" class="text-xl py-2 hover:underline">{navTexts.proyectos}</a>
+  <a href="#experience" class="text-xl py-2 hover:underline">{navTexts.experiencia}</a>
+  <a href="#skills" class="text-xl py-2 hover:underline">{navTexts.habilidades}</a>
+  <a href="#about" class="text-xl py-2 hover:underline">{navTexts.sobre}</a>
 
   <div class="mt-6 flex gap-4">
     <a href="mailto:benjamin.morales3@mail.udp.cl" class="text-gray-700 hover:text-black transition">
@@ -69,8 +103,8 @@ import { Mail, Instagram, Youtube, Linkedin, Github, Menu, X } from 'lucide-astr
     </a>
   </div>
 
-  <a href="/files/CV.pdf" download="Mi_CV.pdf" class="mt-4 px-4 py-2 rounded bg-black text-white hover:bg-black/80">
-    Descargar CV
+  <a href="/files/CV.pdf" download={navTexts.downloadFile} class="mt-4 px-4 py-2 rounded bg-black text-white hover:bg-black/80">
+    {navTexts.descargarCV}
   </a>
 </div>
 
@@ -100,4 +134,23 @@ import { Mail, Instagram, Youtube, Linkedin, Github, Menu, X } from 'lucide-astr
       });
     }
   });
+
+    const langToggle = document.getElementById('lang-toggle');
+    const langMenu = document.getElementById('lang-menu');
+
+    if (langToggle && langMenu) {
+      langToggle.addEventListener('click', () => {
+        langMenu.classList.toggle('hidden');
+      });
+
+      document.addEventListener('click', (e) => {
+  const target = e.target as Node; // 👈 cast seguro
+  if (!langToggle.contains(target) && !langMenu.contains(target)) {
+    langMenu.classList.add('hidden');
+  }
+});
+    }
+
+    
+
 </script>

@@ -1,12 +1,25 @@
 ---
-const {timelineItems} = Astro.props;
+const { timelineItems, lang } = Astro.props;
+
+const supportedLangs = ['es', 'en', 'de'] as const;
+type Lang = typeof supportedLangs[number];
+
+const currentLang: Lang = supportedLangs.includes(lang as Lang) ? (lang as Lang) : 'es';
+
+const labels: Record<Lang, { technologies: string }> = {
+  es: { technologies: 'Tecnologías' },
+  en: { technologies: 'Technologies' },
+  de: { technologies: 'Technologien' },
+};
+
+const currentLabels = labels[currentLang];
 ---
+
 
 <div class="relative border-l-2 border-gray-400 pl-8">
   {timelineItems.map((item: { date: string, technologies: {icon: string, name: string}[] }) => (
     <div class="relative mb-8 flex items-start">
       
-      <!-- Línea de tiempo con iconos -->
       <div class="flex flex-col items-center">
         {item.technologies.map((tech: { icon: string, name: string }) => (
           <div class="w-8 h-8 bg-gray-200 rounded-full flex justify-center items-center mb-2 shadow">
@@ -15,9 +28,9 @@ const {timelineItems} = Astro.props;
         ))}
       </div>
 
-      <!-- Tecnologías a la derecha -->
       <div class="ml-6 bg-gray-100 p-2 lg:p-4 rounded shadow w-full">
         <b class="underline">{item.date}</b>
+        <p class="font-semibold mt-1">{currentLabels.technologies}</p>
         {item.technologies.map((tech: { icon: string, name: string }) => (
           <div class="flex items-center space-x-2">
             <span class="text-gray-800 font-medium">{tech.name}</span>

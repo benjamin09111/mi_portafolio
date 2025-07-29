@@ -1,21 +1,43 @@
 ---
-import Experience from "./SimpleExperience.astro";
+const pathname = Astro.url.pathname;
+const lang = pathname.startsWith("/en") ? "en" : pathname.startsWith("/de") ? "de" : "es";
+
+const texts = {
+  es: {
+    greeting: "Hola!",
+    intro1: "Mi nombre es Benjamín y soy programador informático.",
+    intro2: "Me encanta trabajar en el desarrollo de sitios web. Además, me encanta la docencia.",
+    projectsBtn: "Ver proyectos",
+    downloadBtn: "Descargar CV",
+    downloadFile: "Mi_CV.pdf",
+  },
+  en: {
+    greeting: "Hello!",
+    intro1: "My name is Benjamin and I am a computer programmer.",
+    intro2: "I love working on web development. Also, I am passionate about teaching.",
+    projectsBtn: "See projects",
+    downloadBtn: "Download CV",
+    downloadFile: "My_CV.pdf",
+  },
+  de: {
+    greeting: "Hallo!",
+    intro1: "Mein Name ist Benjamin und ich bin Informatikprogrammierer.",
+    intro2: "Ich arbeite gerne an der Webentwicklung. Außerdem liebe ich das Unterrichten.",
+    projectsBtn: "Projekte ansehen",
+    downloadBtn: "Lebenslauf herunterladen",
+    downloadFile: "Mein_CV.pdf",
+  },
+}[lang];
 ---
 
 <section id="home" class="fade-in rounded-3xl flex flex-col lg:flex-row items-start lg:justify-between gap-6">
-    <article class="md:text-xl lg:text-2xl w-screen xl:w-1/2">
-        <h1 class="text-2xl xl:text-3xl font-semibold mb-8">Hola!</h1>
-        <p>Mi nombre es Benjamín y soy programador informático.</p>
-        <p>Me encanta trabajar en el desarrollo de sitios web. Además, me encanta la docencia. </p>
-        <div class="flex flex-col items-start md:flex-row lg:items-center gap-4 py-6">
-            <a href="#projects" class="button_2">Ver proyectos</a>
-            <a href="/files/CV.pdf" download="Mi_CV.pdf" class="button_2">Descargar CV</a>
-        </div>
-    </article>
-    <div class="hidden 2xl:flex justify-end">
-        <Experience />
+  <article class="md:text-xl lg:text-2xl w-screen xl:w-1/2">
+    <h1 class="text-2xl xl:text-3xl font-semibold mb-8">{texts.greeting}</h1>
+    <p>{texts.intro1}</p>
+    <p>{texts.intro2}</p>
+    <div class="flex flex-col items-start md:flex-row lg:items-center gap-4 py-6">
+      <a href="#projects" class="button_2">{texts.projectsBtn}</a>
+      <a href="/files/CV.pdf" download={texts.downloadFile} class="button_2">{texts.downloadBtn}</a>
     </div>
-    <div class="hidden lg:block 2xl:hidden">
-        <img src="/me.webp" alt="me_photo" class="rounded-image" >
-    </div>
+  </article>
 </section>

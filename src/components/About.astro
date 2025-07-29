@@ -1,29 +1,62 @@
 ---
 import { Mail, Phone, MapPin, Linkedin, Github } from 'lucide-astro';
+
+const pathname = Astro.url.pathname;
+const lang = pathname.startsWith('/en')
+  ? 'en'
+  : pathname.startsWith('/de')
+  ? 'de'
+  : 'es';
+
+const t = {
+  es: {
+    about: 'Sobre mí',
+    paragraph:
+      'Tengo 22 años y soy estudiante de la UDP en Santiago. Me encanta bailar, la música, cantar, los videojuegos y compartir con más gente. Amo la programación y la docencia, me apasiona enseñar e interactuar con mis alumnos.',
+    downloadCV: 'Descargar CV',
+    contact: 'Contacto',
+    location: 'Santiago, Chile',
+    downloadFile: 'Mi_CV.pdf',
+  },
+  en: {
+    about: 'About Me',
+    paragraph:
+      'I\'m 22 years old and currently studying at UDP in Santiago. I love dancing, music, singing, video games, and spending time with people. I\'m passionate about programming and teaching — I truly enjoy sharing knowledge and interacting with my students.',
+    downloadCV: 'Download CV',
+    contact: 'Contact',
+    location: 'Santiago, Chile',
+    downloadFile: 'My_CV.pdf',
+  },
+  de: {
+    about: 'Über mich',
+    paragraph:
+      'Ich bin 22 Jahre alt und studiere an der UDP in Santiago. Ich liebe Tanzen, Musik, Singen, Videospiele und den Austausch mit anderen Menschen. Ich brenne für Programmierung und Lehre — es begeistert mich, Wissen zu vermitteln und mit meinen Schülern zu interagieren.',
+    downloadCV: 'Lebenslauf herunterladen',
+    contact: 'Kontakt',
+    location: 'Santiago, Chile',
+    downloadFile: 'Mein_CV.pdf',
+  },
+}[lang];
 ---
 
 <section id="about" class="fade-in flex flex-col lg:flex-row pb-12 gap-12 items-center justify-between">
-  <!-- Sobre mí -->
   <div class="lg:w-1/2">
-    <h3 class="text-2xl xl:text-3xl  font-bold mb-6 text-gray-900">Sobre mí</h3>
+    <h3 class="text-2xl xl:text-3xl font-bold mb-6 text-gray-900">{t.about}</h3>
     <div class="flex flex-col xl:flex-row gap-4">
-      <img class="md:w-1/3 rounded-lg shadow-lg" src="/me.webp" alt="picture of me">
+      <img class="md:w-1/3 rounded-lg shadow-lg" src="/me.webp" alt="picture of me" />
       <div>
-        <p class="text-gray-700 leading-relaxed">
-          Tengo 22 años y soy estudiante de la UDP en Santiago. Me encanta bailar, la música, cantar, los videojuegos y compartir con más gente. Amo la programación y la docencia, me apasiona enseñar e interactuar con mis alumnos.
-        </p>
+        <p class="text-gray-700 leading-relaxed">{t.paragraph}</p>
         <div class="mt-4 flex items-center justify-center md:justify-start md:items-start gap-3">
-          <a href="/files/CV.pdf" download="Mi_CV.pdf" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg shadow-md hover:bg-gray-300 transition">
-            Descargar CV
+          <a href="/files/CV.pdf" download={t.downloadFile} class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg shadow-md hover:bg-gray-300 transition">
+            {t.downloadCV}
           </a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Contacto -->
   <div>
-    <h3 class="text-2xl xl:text-3xl font-bold mb-6 text-gray-900">Contacto</h3>
+    <h3 class="text-2xl xl:text-3xl font-bold mb-6 text-gray-900">{t.contact}</h3>
     <div class="flex flex-col gap-2">
       <div>
         <Mail class="text-blue-600" size={24} />
@@ -37,7 +70,7 @@ import { Mail, Phone, MapPin, Linkedin, Github } from 'lucide-astro';
       </div>
       <div>
         <MapPin class="text-red-600" size={24} />
-        <span class="text-gray-700">Santiago, Chile</span>
+        <span class="text-gray-700">{t.location}</span>
       </div>
       <div class="flex gap-4 mt-4">
         <a href="https://www.linkedin.com/in/benjamin-morales-pizarro-a63696244/" target="_blank" class="text-gray-700 hover:text-blue-700 transition">

@@ -40,8 +40,8 @@ export const timelineItems = [
       { icon: "nextjs", name: "Next.js" },
       { icon: "typescript", name: "TypeScript" },
       { icon: "docker", name: "Docker" },
-      { icon: "algorithm", name: "Python Algoritmos" },
-      { icon: "trello", name: "Ingeniería de Software" },
+      { icon: "algorithm", name: "Python Algorithms" },
+      { icon: "trello", name: "Software Engineering" },
       { icon: "chatgpt", name: "ChatGPT" },
       { icon: "php", name: "Laravel" },
       { icon: "redis", name: "Redis" }
