@@ -24,7 +24,8 @@ const labels: Record<LangType, { tech: string; links: string }> = {
     <p class="text-sm text-gray-600">{subtitle}</p>
     <p class="text-xs text-gray-500 mt-1">{description}</p>
 
-    <div class="mt-3">
+    <div class="flex flex-wrap gap-8">
+      <div class="mt-3">
       <p class="font-semibold text-sm">{labels[language].tech}</p>
       <div class="flex flex-wrap gap-2 mt-1">
         {tags.map((tag: string) => (
@@ -52,6 +53,7 @@ const labels: Record<LangType, { tech: string; links: string }> = {
           </a>
         )}
       </div>
+    </div>
     </div>
   </div>
 </div>
