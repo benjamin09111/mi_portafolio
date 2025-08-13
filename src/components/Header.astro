@@ -1,4 +1,6 @@
 ---
+import ExchangeInfo from "./ExchangeInfo.astro";
+
 const pathname = Astro.url.pathname;
 const lang = pathname.startsWith("/en") ? "en" : pathname.startsWith("/de") ? "de" : "es";
 
@@ -40,4 +42,5 @@ const texts = {
       <a href="/files/CV.pdf" download={texts.downloadFile} class="button_2">{texts.downloadBtn}</a>
     </div>
   </article>
+  <ExchangeInfo />
 </section>

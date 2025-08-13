@@ -1,0 +1,94 @@
+---
+import { Youtube, Github, Eye } from "lucide-astro";
+
+const {
+  title: titles,
+  subtitle: subtitles,
+  description: descriptions,
+  image,
+  repo,
+  youtube,
+  link,
+  tags,
+} = Astro.props;
+
+// Detectamos idioma desde la URL
+const pathname = Astro.url.pathname;
+const lang = pathname.startsWith("/en") ? "en" : pathname.startsWith("/de") ? "de" : "es";
+
+// Labels para tecnología y links según idioma
+const labels = {
+  es: { tech: "Tecnologías", links: "Links" },
+  en: { tech: "Technologies", links: "Links" },
+  de: { tech: "Technologien", links: "Links" },
+};
+
+// Texto para botones según idioma
+const linkTexts = {
+  es: { repo: "Repositorio", demo: "Demo", live: "Sitio" },
+  en: { repo: "Repo", demo: "Demo", live: "Live Site" },
+  de: { repo: "Repo", demo: "Demo", live: "Website" },
+};
+---
+
+<section
+  class="featured-project bg-gradient-to-r from-indigo-100 via-white to-indigo-100 rounded-lg shadow-xl p-6 flex flex-col md:flex-row gap-6 md:gap-12 items-center"
+>
+  <img
+    src={`/${image}`}
+    alt={titles[lang]}
+    class="rounded-lg md:w-1/2 object-cover shadow-lg"
+    style="max-height: 300px;"
+  />
+
+  <div class="md:w-1/2 flex flex-col justify-center">
+    <h2 class="text-3xl font-extrabold mb-2 text-indigo-900">{titles[lang]}</h2>
+    <h4 class="text-lg text-indigo-700 mb-4 italic">{subtitles[lang]}</h4>
+    <p class="text-md text-gray-700 mb-6 leading-relaxed">{descriptions[lang]}</p>
+
+    <div class="mb-4">
+      <h5 class="font-semibold mb-2">{labels[lang].tech}:</h5>
+      <div class="flex flex-wrap gap-3">
+        {tags.map((tag: string) => (
+          <img src={`/icons/${tag}.svg`} alt={tag} class="w-10 h-10" />
+        ))}
+      </div>
+    </div>
+
+    <div>
+      <h5 class="font-semibold mb-2">{labels[lang].links}:</h5>
+      <div class="flex gap-4">
+        {repo && (
+          <a
+            href={repo}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-indigo-600 hover:text-indigo-800 font-semibold flex items-center"
+          >
+            <Github class="inline mr-2 w-5 h-5" /> {linkTexts[lang].repo}
+          </a>
+        )}
+        {youtube && (
+          <a
+            href={youtube}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-indigo-600 hover:text-indigo-800 font-semibold flex items-center"
+          >
+            <Youtube class="inline mr-2 w-5 h-5" /> {linkTexts[lang].demo}
+          </a>
+        )}
+        {link && (
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-indigo-600 hover:text-indigo-800 font-semibold flex items-center"
+          >
+            <Eye class="inline mr-2 w-5 h-5" /> {linkTexts[lang].live}
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

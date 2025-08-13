@@ -1,0 +1,52 @@
+---
+const lang = Astro.url.pathname.startsWith("/en")
+  ? "en"
+  : Astro.url.pathname.startsWith("/de")
+  ? "de"
+  : "es";
+
+const texts = {
+  es: {
+    title: "📍 Actualmente en intercambio",
+    content:
+      "Desde el 1 de septiembre me encuentro en Múnich, Alemania, realizando un intercambio en la Hochschule München. Estoy cursando mis últimos ramos en inglés.",
+  },
+  en: {
+    title: "📍 Currently on exchange",
+    content:
+      "Since September 1st, I’m in Munich, Germany, doing an exchange at Hochschule München. I’m taking my final courses in English.",
+  },
+  de: {
+    title: "📍 Zurzeit im Austauschprogramm",
+    content:
+      "Seit dem 1. September bin ich in München, Deutschland, und nehme am Austauschprogramm der Hochschule München teil. Ich belege meine letzten Kurse auf Englisch.",
+  },
+}[lang];
+---
+
+<div class="relative w-full lg:w-96 text-white rounded-3xl overflow-hidden shadow-lg animate-fadeIn">
+  <div
+    class="absolute inset-0 bg-cover bg-center opacity-30"
+    style="background-image: url('/hoschule.webp');"
+  ></div>
+  <div class="relative bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-600 bg-opacity-80 p-6 flex flex-col gap-3">
+    <h2 class="text-xl font-bold">{texts.title}</h2>
+    <p class="text-sm leading-relaxed">{texts.content}</p>
+  </div>
+</div>
+
+<style>
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+</style>

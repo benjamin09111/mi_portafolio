@@ -5,6 +5,9 @@ import Projects from './Projects.astro';
 import Experience from './Experience.astro';
 import Skills from './Skills.astro';
 import About from './About.astro';
+import FeaturedProject from './FeaturedProject.astro';
+import { featuredProject } from '../data/featuredproject.js';
+
 import "../styles/global.css";
 ---
 
@@ -12,6 +15,7 @@ import "../styles/global.css";
 	<Navbar />
 	<main class="relative px-2 md:px-12 lg:px-32 xl:px-64 flex flex-col gap-4 lg:gap-12">
 		<Header />
+    <FeaturedProject {...featuredProject} />
 		<Projects />
 		<Experience />
 		<Skills />
